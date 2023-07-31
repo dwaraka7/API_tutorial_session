@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/books/41/
+DELETE http://localhost:3000/books/51/
 
 ###
 
