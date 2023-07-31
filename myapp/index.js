@@ -85,7 +85,7 @@ app.post("/books/", async (request, response) => {
       );`;
   const dbResponse = await db.run(addBookQuery);
   const newBookId = dbResponse.lastID;
-  response.send({ bookId: newBookId });
+  response.send({ newBook: newBookId });
 });
 
 // Update Book API
