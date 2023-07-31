@@ -91,22 +91,27 @@ app.post("/books/", async (request, response) => {
 // Update Book API
 app.put("/books/:bookId/", async (request, response) => {
   const { bookId } = request.params;
-  const updateBook = request.body;
-  const {
-    title,
-    authorId,
-    rating,
-    ratingCount,
-    reviewCount,
-    description,
-    pages,
-    dateOfPublication,
-    editionLanguage,
-    price,
-    onlineStores,
-  } = updateBook;
+  const onlyBookQuery = oneBook;
+  const book = await db.get(onlyBookQuery + bookId + ";");
+  if (book == undefined) {
+    response.send(`book is not there`);
+  } else {
+    const updateBook = request.body;
+    const {
+      title,
+      authorId,
+      rating,
+      ratingCount,
+      reviewCount,
+      description,
+      pages,
+      dateOfPublication,
+      editionLanguage,
+      price,
+      onlineStores,
+    } = updateBook;
 
-  const updateBookQuery = `
+    const updateBookQuery = `
     UPDATE
       book
     SET
@@ -124,8 +129,9 @@ app.put("/books/:bookId/", async (request, response) => {
     WHERE
       book_id = ${bookId};`;
 
-  await db.run(updateBookQuery);
-  response.send(`Book with ID ${bookId} is successfully Updated`);
+    await db.run(updateBookQuery);
+    response.send(`Book with ID ${bookId} is successfully Updated`);
+  }
 });
 
 //Delete Book API
